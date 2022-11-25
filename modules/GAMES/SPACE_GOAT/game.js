@@ -1,16 +1,14 @@
-const instance = require("./modules/instanceController.js");
+const instance = require('./modules/instanceController.js')
 
 module.exports = {
-    init() {
-        devShowMap()
-    }
+  init () {
+    devShowMap()
+  }
 }
 
 // Path: main\hidden\Node-terminal-Game\modules\GAMES\ELITE\game.js
 
-function devShowMap(){
-
-    console.clear()
-    instance.mainRender(2,"0-0")
-
+function devShowMap () {
+  console.clear()
+  instance.mainRender('0-0')
 }
