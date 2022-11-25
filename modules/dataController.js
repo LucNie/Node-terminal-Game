@@ -1,8 +1,8 @@
 const path = require('path');
 
 var save = {}; // instanced save
-
-// save file
+const SAVE_PATH = process.env.SAVE_PATH || path.resolve(__dirname, "../SAVES/save.json");
+ // save file
 const fs = require('fs');
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
     initSave() {
 
         // test if save file exist
-        if (fs.existsSync(path.resolve(__dirname, '../save.json'))) {
+        if (fs.existsSync(path.resolve(__dirname, SAVE_PATH))) {
             console.log("save file exist");
         } else {
             console.log("save file not exist");
@@ -52,11 +52,11 @@ module.exports = {
                 ]
             }
 
-            fs.writeFileSync(path.resolve(__dirname, '../save.json'), JSON.stringify(_defaultSave));
+            fs.writeFileSync(path.resolve(__dirname, SAVE_PATH), JSON.stringify(_defaultSave));
 
         }
         // load save file
-        save = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../save.json')));
+        save = JSON.parse(fs.readFileSync(path.resolve(__dirname, SAVE_PATH)));
     },
 
     getSave() {
