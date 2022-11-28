@@ -4,10 +4,12 @@ const path = require('path')
 
 // init 2d map array
 let instance = []
-var currentMap = '0-0' // level - room
+// let currentMap = '0-0' // level - room
 // 1 = collision , 0 = no collision
-const devBlock = [[1, 1, 1, 1], [1, 0, 0, 1], [1, 0, 0, 1], [1, 1, 1, 1]] // 4x4 id = 1
 const devAir = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] // 4x4 id = 0
+const devBlock = [[1, 1, 1, 1], [1, 0, 0, 1], [1, 0, 0, 1], [1, 1, 1, 1]] // 4x4 id = 1
+const devFullBlock = [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]] // 4x4 id = 2
+const devTopPlatfrom = [[1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]] // 4x4 id = 3
 
 // creat map
 function buildMap (aMap) { // string "0-0"
@@ -37,6 +39,10 @@ function buildMap (aMap) { // string "0-0"
         _mapBuilt[i][j] = devBlock
       } else if (_map[i][j] === 0) {
         _mapBuilt[i][j] = devAir
+      } else if (_map[i][j] === 2) {
+        _mapBuilt[i][j] = devFullBlock
+      } else if (_map[i][j] === 3) {
+        _mapBuilt[i][j] = devTopPlatfrom
       }
     }
   }
@@ -49,7 +55,6 @@ function mainRender (aMapName) { // aMultiplicater = 1 / 2 / 4
   // render map to terminal x2
 
   instance = buildMap(aMapName) // build map
-
 
   let _rendermap = ''
 
