@@ -1,14 +1,15 @@
 [ROBOTO + enemy + BLOCK]
 max lenght : 8x8px
 [COLOR]
-0: null
-1: black/white
-2: grey
-3: red
-4: green
-5: blue
-6: yellow
-7: cyan
-8: magenta
-9: orange
-... TODO COMPLETE ALL COLORS
+0.vide , 
+1.white, 
+2.grey , 
+3.red, 
+4.green, 
+5.blue, 
+6.yellow, 
+7.orange, 
+8.purple, 
+9.pink, 
+10.brown, 
+11.black

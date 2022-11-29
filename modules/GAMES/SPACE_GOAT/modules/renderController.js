@@ -1,7 +1,7 @@
 'use-strict'
 const dataController = require('./dataController.js')
-
-const asciiRendu = ['  ', '██', '▒▒', '\x1b[31m██\x1b[0m']
+// vide , white, grey , red, green, blue, yellow, orange, purple, pink, brown, black
+const asciiRendu = ['  ', '██', '▒▒', '\x1b[31m██\x1b[0m', '\x1b[32m██\x1b[0m', '\x1b[34m██\x1b[0m', '\x1b[33m██\x1b[0m', '\x1b[33m██\x1b[0m', '\x1b[35m██\x1b[0m', '\x1b[35m██\x1b[0m', '\x1b[33m██\x1b[0m', '\x1b[30m██\x1b[0m']
 
 function mainRender () { // aMultiplicater = 1 / 2 / 4
   let _rendermap = ''
