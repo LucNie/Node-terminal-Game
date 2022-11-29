@@ -6,14 +6,14 @@ const asciiRendu = ['  ', '██', '▒▒', '\x1b[31m██\x1b[0m', '\x1b[32m
 function mainRender () { // aMultiplicater = 1 / 2 / 4
   let _rendermap = ''
 
-  //   console.log(dataController.instance['0-0'][0][0])
+  //   console.log(dataController.instanceMap['0-0'][0][0])
   //   process.exit(0)
 
   for (let i = 0; i < 16; i++) { // ligne
     for (let k = 0; k < 4; k++) { // ligne
       for (let j = 0; j < 32; j++) { // column
         for (let l = 0; l < 4; l++) { // column
-          _rendermap += asciiRendu[dataController.instance[dataController.currentMap][i][j][k][l]]
+          _rendermap += asciiRendu[dataController.instanceMap[dataController.currentMap][i][j][k][l]]
         }
       }
 

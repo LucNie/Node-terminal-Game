@@ -2,7 +2,10 @@
 const fs = require('fs')
 const path = require('path')
 
-const instance = {}
+const instanec = {
+  player: []
+}
+const instanceMap = {}
 const maps = {} // raw map
 const block = []
 let plutar = {} // main character !!
@@ -34,7 +37,7 @@ function buildMap (aMap) { // string "0-0"
     }
   }
 
-  instance[aMap] = _mapBuilt
+  instanceMap[aMap] = _mapBuilt
   return _mapBuilt
 }
 
@@ -58,10 +61,22 @@ function initData () {
   return true
 }
 
+
+function playerInit(){
+    let velocity = [0,0]
+    let position = [0,0]
+
+    instanec.player.push({
+        velocity,
+        position
+    })
+
+}
+
 module.exports = {
   initData,
   buildMap,
-  instance,
+  instanceMap,
   maps,
   block,
   currentMap,
