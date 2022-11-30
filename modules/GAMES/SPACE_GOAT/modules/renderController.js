@@ -51,8 +51,15 @@ function renderPlayer (aCoordonate) { // [x,y]
     
     // console.log(dataController.instance.players[0].position[0] - aCoordonate[0])
     // return 5
-    return dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
 
+    if(dataController.instance.players[0].velocity[1] > 0){
+      return dataController.plutar.run[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.run[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    } else if (dataController.instance.players[0].velocity[1] < 0){
+      return dataController.plutar.brake[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.brake[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    }
+    else  {
+    return dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    }
     // process.exit(0)
   }
 
