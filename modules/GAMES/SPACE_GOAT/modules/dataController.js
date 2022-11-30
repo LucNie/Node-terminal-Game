@@ -2,14 +2,14 @@
 const fs = require('fs')
 const path = require('path')
 
-const instance = {
-  player: []
+ const instance = {
+  players: []
 }
 
 const instanceMap = {}
 const maps = {} // raw map
 const block = []
-let plutar = {} // main character !!
+let plutar = JSON.parse(fs.readFileSync(path.join(__dirname, '../DATA/PLUTAR/PLUTAR.json'), 'utf8'))
 const currentMap = '0-0'
 
 function buildMap (aMap) { // string "0-0"
@@ -41,10 +41,9 @@ function buildMap (aMap) { // string "0-0"
   instanceMap[aMap] = _mapBuilt
   return _mapBuilt
 }
+
 function initData () {
   // path of plutar object ../DATA/PLUTAR/PLUTAR.json
-  plutar = JSON.parse(fs.readFileSync(path.join(__dirname, '../DATA/PLUTAR/PLUTAR.json'), 'utf8'))
-  console.log('plutar is loaded')
   // load maps from ../DATA/MAPS/*.map
   const _maps = fs.readdirSync(path.join(__dirname, '../DATA/MAPS/'))
   for (let i = 0; i < _maps.length; i++) {
@@ -62,10 +61,10 @@ function initData () {
 }
 
 function playerInit () {
-  const velocity = [0, 0]
-  const position = [0, 0]
+  const velocity = [0, 0] // x, y 
+  const position = [30, 16] // postion in pixel (x,y)
 
-  instance.player.push({
+  instance.players.push({
     velocity,
     position
   })
@@ -76,8 +75,9 @@ module.exports = {
   buildMap,
   playerInit,
   instanceMap,
+  instance,
+  plutar,
   maps,
   block,
   currentMap,
-  plutar
 }
