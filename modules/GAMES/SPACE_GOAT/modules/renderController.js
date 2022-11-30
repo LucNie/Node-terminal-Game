@@ -51,7 +51,7 @@ function renderPlayer (aCoordonate) { // [x,y]
     
     // console.log(dataController.instance.players[0].position[0] - aCoordonate[0])
     // return 5
-    return dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    return dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
 
     // process.exit(0)
   }
