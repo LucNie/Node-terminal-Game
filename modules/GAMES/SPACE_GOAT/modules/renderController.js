@@ -10,7 +10,14 @@ const asciiRendu = [' ', '█', '▒', '\x1b[31m█\x1b[0m', '\x1b[32m█\x1b[0m
  * @returns 
  */
 function mainRender () { // aMultiplicater = 1 / 2 / 4
+
+  if (process.env.SPACE_NO_RENDER === 'true'){
+    return 
+  }
+
   let _rendermap = ''
+
+  
 
   //   console.log(dataController.instanceMap['0-0'][0][0])
   //   process.exit(0)
@@ -52,19 +59,89 @@ function renderPlayer (aCoordonate) { // [x,y]
     // console.log(dataController.instance.players[0].position[0] - aCoordonate[0])
     // return 5
 
-    if(dataController.instance.players[0].velocity[1] > 0){
-      return dataController.plutar.run[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.run[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
-    } else if (dataController.instance.players[0].velocity[1] < 0){
-      return dataController.plutar.brake[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.brake[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    // if(dataController.instance.players[0].velocity[1] > 0){
+    //   return dataController.plutar.run[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.run[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+      
+    // } else if (dataController.instance.players[0].velocity[1] < 0 ) {
+    //   // inverse sprite
+
+    //   const _sprite = [...dataController.plutar.run[aCoordonate[0] - dataController.instance.players[0].position[0] + 8]].reverse()
+
+    //   return _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+      
+    // }
+    // else  if (dataController.instance.players[0].velocity[0] === 0 && dataController.instance.players[0].rotation === 0) {
+    // return dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    // } else if ( dataController.instance.players[0].velocity[0] === 0 && dataController.instance.players[0].rotation === 1)
+    // {
+    //   // inverse sprite
+    //   const _sprite = [...dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8]].reverse()
+
+    //   return _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    // } else if (dataController.instance.players[0].velocity[1] !== 0 && dataController.instance.players[0].rotation === 0 && dataController.instance.players[0].velocity[0] === 0) { // jump
+    //   return dataController.plutar.jump[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.jump[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    // } else if ( dataController.instance.players[0].velocity[1] !== 0 && dataController.instance.players[0].rotation === 1 && dataController.instance.players[0].velocity[0] === 0) // jump + rotation inverse
+    // {
+    //   // inverse sprite
+    //   const _sprite = [...dataController.plutar.jump[aCoordonate[0] - dataController.instance.players[0].position[0] + 8]].reverse()
+
+    //   return _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    // } else if ( dataController.instance.players[0].velocity[1] !== 0 && dataController.instance.players[0].rotation === 0) // fall and run right
+    // {
+    //   return dataController.plutar.fall_run[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.fall_run[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    // } else if ( dataController.instance.players[0].velocity[1] !== 0 && dataController.instance.players[0].rotation === 1) // fall and run left
+    // {
+    //   // inverse sprite
+    //   const _sprite = [...dataController.plutar.fall_run[aCoordonate[0] - dataController.instance.players[0].position[0] + 8]].reverse()
+
+    //   return _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+    // }
+
+
+    //FULL OPTIMIZED CODE #HAPPY 
+    function drawfront(aSpriteArray){ 
+      const left = dataController.instance.players[0].rotation === 0 ? false : true
+      if (!left){
+        return aSpriteArray[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : aSpriteArray[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+      }
+      else {
+        const _sprite = [...aSpriteArray[aCoordonate[0] - dataController.instance.players[0].position[0] + 8]].reverse()
+        return _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+      }
     }
-    else  {
-    return dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : dataController.plutar.stand[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+
+      // TODO need to moov to the local player object
+    let fall = false
+    let run = false
+    
+  
+    if ( dataController.instance.players[0].velocity[1] !== 0){ // fall
+      fall = true
     }
-    // process.exit(0)
+    if ( dataController.instance.players[0].velocity[0] !== 0){ // run
+      run = true
+    }
+
+    if (!fall && !run){ // stand
+      return drawfront(dataController.plutar.stand)
+    }
+
+    if (!fall && run){ // jump
+      return drawfront(dataController.plutar.jump)
+    }
+
+    if (fall && !run){
+      return drawfront(dataController.plutar.run)
+    }
+
+    if (fall && run){ // fall and run
+      return drawfront(dataController.plutar.fall_run)
+    }
+
   }
-
-
 }
+
+
 
 module.exports = {
   mainRender
