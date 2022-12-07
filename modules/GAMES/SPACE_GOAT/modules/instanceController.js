@@ -13,6 +13,11 @@ function frameRateController () {
 
   renderController.mainRender()
 
+  let oldPosition = [dataController.instance.players[0].position[0], dataController.instance.players[0].position[1]]
+
+
+
+
   if (dataController.instance.players[0].velocity[0] > 0) { // if the player velocity go up
     //moov
     dataController.instance.players[0].position[0] -= Math.round(dataController.instance.players[0].velocity[0] / 4)
@@ -57,6 +62,8 @@ function frameRateController () {
     dataController.instance.players[0].rotation = 1
   }
 
+
+
   boundCollider();
 
   setTimeout(() => {
@@ -90,9 +97,10 @@ function boundCollider(){
   }
 }
 
-function collider(){
+function collider(oldPosition){ //Plutar have 6x7px collider
   //check if the player is in the collider with the instanced map
-  // check if player have a block in front right 
+  
+  
   
 }
 
