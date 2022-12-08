@@ -64,7 +64,7 @@ function frameRateController () {
 
   
 
-  // boundCollider();
+  boundCollider();
   collider(oldPosition,oldVelocity) //oldPosition x and y of the player before the moov
 
 
@@ -80,22 +80,22 @@ function frameRateController () {
 
 
 function boundCollider(){
-  if (dataController.instance.players[0].position[0] > 60) { //vertical bound
-    dataController.instance.players[0].position[0] = 60
+  if (dataController.instance.players[0].position[0] > 52) { //vertical bound
+    dataController.instance.players[0].position[0] = 52
     dataController.instance.players[0].velocity[0] = 0
 
   } else if (dataController.instance.players[0].position[0] < 8 ) {
-    
+  
     dataController.instance.players[0].position[0] = 8
 
   }
 
-  if (dataController.instance.players[0].position[1] > 125) { //horizontal bound
-    dataController.instance.players[0].position[1] = 125
+  if (dataController.instance.players[0].position[1] > 120) { //horizontal bound
+    dataController.instance.players[0].position[1] = 120
     dataController.instance.players[0].velocity[1] = 0
   }
-  else if (dataController.instance.players[0].position[1] < 11) {
-    dataController.instance.players[0].position[1] = 11
+  else if (dataController.instance.players[0].position[1] < 4) {
+    dataController.instance.players[0].position[1] = 4
     dataController.instance.players[0].velocity[1] = 0
   }
 }
@@ -126,8 +126,8 @@ function detectCollision(){
   const _pixelMap = dataController.pixelInstancedMap[dataController.currentMap]
 
   //colision
-  const topLeft = _pixelMap[playerPosition[0]][playerPosition[1]] !== 0
-  const topRight = _pixelMap[playerPosition[0]-7][playerPosition[1]] !== 0
+  const topLeft = _pixelMap[playerPosition[0]][playerPosition[1]]
+  const topRight = _pixelMap[playerPosition[0]][playerPosition[1] + 7] 
   // const bottomLeft = _pixelMap[playerPosition[0]+8][playerPosition[1]] !== 0
   // const bottomRight = _pixelMap[playerPosition[0]][playerPosition[1]+8] !== 0
   // const floorLeft = _pixelMap[playerPosition[0]+9][playerPosition[1]] !== 0
@@ -141,7 +141,8 @@ function detectCollision(){
   } 
 
   console.log(playerPosition)
-  console.log("topleft : ["  )
+  console.log("topleft : [" + playerPosition[0] + ", " + playerPosition[1] + "]")
+  console.log("topRight : [" + (playerPosition[0]) + ", " + (playerPosition[1]+7) + "]")
   // collision bottom left
   // const bottomLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
   // const bottomRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0

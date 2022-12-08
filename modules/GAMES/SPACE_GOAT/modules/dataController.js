@@ -82,7 +82,7 @@ function initData () {
 
 function playerInit () {
   const velocity = [0, 0] // x, y 
-  const position = [60, 16] // postion in pixel (x,y)
+  const position = [50, 16] // postion in pixel (x,y) x = ligne y = column
   let rotation = 0 // "0" = right "1" = left
 
   instance.players.push({
