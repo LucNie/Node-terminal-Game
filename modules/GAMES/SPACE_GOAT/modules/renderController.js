@@ -40,7 +40,6 @@ function mainRender() { // aMultiplicater = 1 / 2 / 4
 
   console.clear()
   console.log(_rendermap)
-  // process.exit(0)
 
   return _rendermap
 }
@@ -55,32 +54,32 @@ function renderPlayer(aCoordonate) { // [x,y]
 
 
 
-  if (dataController.instance.players[0].position[0] <= aCoordonate[0] + 8 && dataController.instance.players[0].position[0] > aCoordonate[0] && dataController.instance.players[0].position[1] <= aCoordonate[1] + 8 && dataController.instance.players[0].position[1] > aCoordonate[1]) { // if player is in the render zone
+  if (dataController.instance.players[0].position[0] < aCoordonate[0] + 8 && dataController.instance.players[0].position[0] >= aCoordonate[0] && dataController.instance.players[0].position[1] < aCoordonate[1] + 8 && dataController.instance.players[0].position[1] >= aCoordonate[1]) { // if player is in the render zone
 
-    // debug mod
-    if (process.env.DEV === 'true') {
+    // // debug mod
+    // if (process.env.DEV === 'true') {
 
-      // write top left corner with red color
-      if (dataController.instance.players[0].position[0] === aCoordonate[0] + 8 && dataController.instance.players[0].position[1] === aCoordonate[1] + 8) {
-        return 4
-      }
-      // write top right corner with green color
-      if (dataController.instance.players[0].position[0] === aCoordonate[0] + 8 && dataController.instance.players[0].position[1] === aCoordonate[1]+1) {
-        return 4
-      }
+    //   // write top left corner with red color
+    //   if (dataController.instance.players[0].position[0] === aCoordonate[0] + 7  && dataController.instance.players[0].position[1] === aCoordonate[1] + 7 ) {
+    //     return 4
+    //   }
+    //   // write top right corner with green color
+    //   if (dataController.instance.players[0].position[0] === aCoordonate[0] + 7 && dataController.instance.players[0].position[1] === aCoordonate[1]) {
+    //     return 4
+    //   }
 
-      // write bottom left corner with blue color
-      if (dataController.instance.players[0].position[0] === aCoordonate[0] + 1 && dataController.instance.players[0].position[1] === aCoordonate[1] + 8) {
-        return 4
-      }
+    //   // write bottom left corner with blue color
+    //   if (dataController.instance.players[0].position[0] === aCoordonate[0]  && dataController.instance.players[0].position[1] === aCoordonate[1] + 7) {
+    //     return 4
+    //   }
 
-      // write bottom right corner with yellow color
-      if (dataController.instance.players[0].position[0] === aCoordonate[0] + 1 && dataController.instance.players[0].position[1] === aCoordonate[1] + 1) {
-        return 4
-      }
+    //   // write bottom right corner with yellow color
+    //   if (dataController.instance.players[0].position[0] === aCoordonate[0] && dataController.instance.players[0].position[1] === aCoordonate[1] ) {
+    //     return 4
+    //   }
 
-      return 9
-    }
+    //   return 9
+    // }
 
 
 
@@ -88,11 +87,11 @@ function renderPlayer(aCoordonate) { // [x,y]
     function drawfront(aSpriteArray) {
       const left = dataController.instance.players[0].rotation === 0 ? false : true
       if (!left) {
-        return aSpriteArray[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : aSpriteArray[aCoordonate[0] - dataController.instance.players[0].position[0] + 8][aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+        return aSpriteArray[aCoordonate[0] - dataController.instance.players[0].position[0] + 7][aCoordonate[1] - dataController.instance.players[0].position[1] + 7] === 0 ? undefined : aSpriteArray[aCoordonate[0] - dataController.instance.players[0].position[0] + 7][aCoordonate[1] - dataController.instance.players[0].position[1] + 7]
       }
       else {
-        const _sprite = [...aSpriteArray[aCoordonate[0] - dataController.instance.players[0].position[0] + 8]].reverse()
-        return _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8] === 0 ? undefined : _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 8]
+        const _sprite = [...aSpriteArray[aCoordonate[0] - dataController.instance.players[0].position[0] + 7]].reverse()
+        return _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 7] === 0 ? undefined : _sprite[aCoordonate[1] - dataController.instance.players[0].position[1] + 7]
       }
     }
 

@@ -7,6 +7,7 @@ const path = require('path')
 }
 
 const instanceMap = {}
+const pixelInstancedMap = {}
 const maps = {} // raw map
 const block = []
 let plutar = JSON.parse(fs.readFileSync(path.join(__dirname, '../DATA/PLUTAR/PLUTAR.json'), 'utf8'))
@@ -38,7 +39,26 @@ function buildMap (aMap) { // string "0-0"
     }
   }
 
+  // build pixel map x and y 
+  const _pixelMap = []
+  let _pixelMapX = -1
+  let _pixelMapY = -1
+  for (let i = 0; i < 16; i++) { // ligne
+    for ( let k =0; k < 4; k++) { // column
+      _pixelMapX++
+      _pixelMap[_pixelMapX] = []
+      for (let j = 0; j < 32; j++) { // ligne
+        for ( let l =0; l < 4; l++) { // column
+          _pixelMapY++
+          _pixelMap[_pixelMapX][_pixelMapY] = _mapBuilt[i][j][k][l]
+        }
+      }
+      _pixelMapY = -1
+    }
+  }
+
   instanceMap[aMap] = _mapBuilt
+  pixelInstancedMap[aMap] = _pixelMap
   return _mapBuilt
 }
 
@@ -82,4 +102,5 @@ module.exports = {
   maps,
   block,
   currentMap,
+  pixelInstancedMap
 }

@@ -108,14 +108,14 @@ function collider(aOldPosition,aOldVelocity){ //Plutar have 6x7px collider
   // playerVelocity = dataController.instance.players[0].velocity //not used
   const colision = detectCollision() //return bottomLeft, bottomRight, floorLeft, floorRight 
 
-      if (colision.bottomLeft === true || colision.bottomRight === true ) {
-        dataController.instance.players[0].position[0] -= 1
-        dataController.instance.players[0].velocity[0] = 0
-        grounded = true
-      } else if (colision.floorRight === true || colision.bottomRight === true) {
-        dataController.instance.players[0].velocity[0] = 0
-        grounded = true
-      }
+      // if (colision.bottomLeft === true || colision.bottomRight === true ) {
+      //   dataController.instance.players[0].position[0] -= 1
+      //   dataController.instance.players[0].velocity[0] = 0
+      //   grounded = true
+      // } else if (colision.floorRight === true || colision.bottomRight === true) {
+      //   dataController.instance.players[0].velocity[0] = 0
+      //   grounded = true
+      // }
 
 
 
@@ -123,21 +123,38 @@ function collider(aOldPosition,aOldVelocity){ //Plutar have 6x7px collider
 
 function detectCollision(){
   const playerPosition = dataController.instance.players[0].position
+  const _pixelMap = dataController.pixelInstancedMap[dataController.currentMap]
+
+  //colision
+  const topLeft = _pixelMap[playerPosition[0]][playerPosition[1]] !== 0
+  const topRight = _pixelMap[playerPosition[0]-7][playerPosition[1]] !== 0
+  // const bottomLeft = _pixelMap[playerPosition[0]+8][playerPosition[1]] !== 0
+  // const bottomRight = _pixelMap[playerPosition[0]][playerPosition[1]+8] !== 0
+  // const floorLeft = _pixelMap[playerPosition[0]+9][playerPosition[1]] !== 0
+  // const floorRight = _pixelMap[playerPosition[0]+9][playerPosition[1]+8] !== 0
+
+  const debugRendu = { topLeft, topRight}
+
+  // rendu debug
+  for(let i = 0 ; i < Object.keys(debugRendu).length ; i++){
+    console.log(Object.keys(debugRendu)[i] , "\x1b[33m" + debugRendu[Object.keys(debugRendu)[i]] + "\x1b[0m")
+  } 
+
+  console.log(playerPosition)
+  console.log("topleft : ["  )
   // collision bottom left
-  const bottomLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
-  const bottomRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
-  const floorLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
-  const floorRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
-  const topLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
-  const topRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  // const bottomLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  // const bottomRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  // const floorLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  // const floorRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  // const topLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  // const topRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
 
   
 
-  console.log('bottomLeft : \x1b[32m'+bottomLeft+'\x1b[0m' + ' bottomRight : \x1b[32m'+bottomRight+'\x1b[0m' + ' floorLeft : \x1b[32m'+floorLeft+'\x1b[0m' + ' floorRight : \x1b[32m'+floorRight+'\x1b[0m' + ' topLeft : \x1b[32m'+topLeft+'\x1b[0m' + ' topRight : \x1b[32m'+topRight+'\x1b[0m' )
 
 
-
-  return {bottomLeft, bottomRight, floorLeft, floorRight}
+  // return { topLeft, topRight, bottomLeft, bottomRight, floorLeft, floorRight }
 }
 
 
