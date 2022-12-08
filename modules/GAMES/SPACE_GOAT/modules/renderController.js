@@ -2,8 +2,8 @@
 const dataController = require('./dataController.js')
 // dotenv
 require('dotenv').config()
-// 0.vide , 1.white, 2.grey , 3.red, 4.green, 5.blue, 6.yellow, 7.orange, 8.purple, 9.pink, 10.brown, 11.black
-const asciiRendu = [' ', '█', '▒', '\x1b[31m█\x1b[0m', '\x1b[32m█\x1b[0m', '\x1b[34m█\x1b[0m', '\x1b[33m█\x1b[0m', '\x1b[33m█\x1b[0m', '\x1b[35m█\x1b[0m', '\x1b[35m█\x1b[0m', '\x1b[33m█\x1b[0m', '\x1b[30m█\x1b[0m']
+// 0.vide , 1.white, 2.vide , 3.red, 4.green, 5.blue, 6.yellow, 7.orange, 8.purple, 9.pink, 10.brown, 11.black
+const asciiRendu = [' ', '█', ' ', '\x1b[31m█\x1b[0m', '\x1b[32m█\x1b[0m', '\x1b[34m█\x1b[0m', '\x1b[33m█\x1b[0m', '\x1b[33m█\x1b[0m', '\x1b[35m█\x1b[0m', '\x1b[35m█\x1b[0m', '\x1b[33m█\x1b[0m', '\x1b[30m█\x1b[0m']
 
 /**
  * @param {} aaMultiplicater 

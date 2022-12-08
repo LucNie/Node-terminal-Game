@@ -34,8 +34,6 @@ function frameRateController () {
   if (dataController.instance.players[0].velocity[1] > 0) { // if the player velocity go right
     //moov
     dataController.instance.players[0].position[1] += Math.round(dataController.instance.players[0].velocity[1] / 4)
-    //decrease velocity
-    dataController.instance.players[0].velocity[1] -= 1
 
   } else if (dataController.instance.players[0].velocity[1] < 0) { // if the player velocity go left
 
@@ -49,12 +47,11 @@ function frameRateController () {
 
 
   // simulate gravity
-  if (dataController.instance.players[0].position[0] < 60 && grounded === false) {
+  if ( grounded === false && dataController.instance.players[0].velocity[0] > -8  ){
     dataController.instance.players[0].velocity[0] -= 1
   }
 
-  grounded = false // reset grounded
-
+ 
   //gestion rotation player
   if (dataController.instance.players[0].velocity[1] > 0) {
     dataController.instance.players[0].rotation = 0
@@ -63,8 +60,7 @@ function frameRateController () {
   }
 
   
-
-  boundCollider();
+  grounded = false // reset grounded
   collider(oldPosition,oldVelocity) //oldPosition x and y of the player before the moov
 
 
@@ -108,16 +104,24 @@ function collider(aOldPosition,aOldVelocity){ //Plutar have 6x7px collider
   // playerVelocity = dataController.instance.players[0].velocity //not used
   const colision = detectCollision() //return bottomLeft, bottomRight, floorLeft, floorRight 
 
-      // if (colision.bottomLeft === true || colision.bottomRight === true ) {
-      //   dataController.instance.players[0].position[0] -= 1
-      //   dataController.instance.players[0].velocity[0] = 0
-      //   grounded = true
-      // } else if (colision.floorRight === true || colision.bottomRight === true) {
-      //   dataController.instance.players[0].velocity[0] = 0
-      //   grounded = true
-      // }
+  //detect bound collision
+
+      if (colision.bottomUpLeft === true || colision.bottomUpRight === true) {
+        dataController.instance.players[0].position[1] = aOldPosition[1]
+        dataController.instance.players[0].velocity[1] = 0
+      } else if (colision.bottomLeft === true || colision.bottomRight === true ) {
+        dataController.instance.players[0].position[0] -= 1
+        dataController.instance.players[0].velocity[0] = 0
+        grounded = true
+      } 
+       if (colision.floorRight === true || colision.floorLeft === true) {
+        dataController.instance.players[0].velocity[0] = 0
+        grounded = true
+      }
 
 
+
+      console.log("grounded",grounded)
 
 }
 
@@ -125,24 +129,32 @@ function detectCollision(){
   const playerPosition = dataController.instance.players[0].position
   const _pixelMap = dataController.pixelInstancedMap[dataController.currentMap]
 
-  //colision
-  const topLeft = _pixelMap[playerPosition[0]][playerPosition[1]]
-  const topRight = _pixelMap[playerPosition[0]][playerPosition[1] + 7] 
-  // const bottomLeft = _pixelMap[playerPosition[0]+8][playerPosition[1]] !== 0
-  // const bottomRight = _pixelMap[playerPosition[0]][playerPosition[1]+8] !== 0
-  // const floorLeft = _pixelMap[playerPosition[0]+9][playerPosition[1]] !== 0
-  // const floorRight = _pixelMap[playerPosition[0]+9][playerPosition[1]+8] !== 0
+  //colision 
+  // adding some adjustement value to fit the "real" player collider + 2 for the left foot and + 6 for the right foot
 
-  const debugRendu = { topLeft, topRight}
+
+  const topLeft = _pixelMap[playerPosition[0]][playerPosition[1]+2] !== 0
+  const topRight = _pixelMap[playerPosition[0]][playerPosition[1] + 5] !== 0
+
+  const bottomUpLeft = _pixelMap[playerPosition[0]+6][playerPosition[1]+2] !== 0
+  const bottomUpRight = _pixelMap[playerPosition[0]+6][playerPosition[1]+5] !== 0
+
+  const bottomLeft = _pixelMap[playerPosition[0]+7][playerPosition[1]+2] !== 0
+  const bottomRight = _pixelMap[playerPosition[0]+7][playerPosition[1]+5] !== 0
+  const floorLeft = _pixelMap[playerPosition[0]+8][playerPosition[1]+2] !== 0
+  const floorRight = _pixelMap[playerPosition[0]+8][playerPosition[1]+5] !== 0
+
+  const debugRendu = { topLeft, topRight, bottomUpLeft, bottomUpRight, bottomLeft, bottomRight, floorLeft, floorRight }
 
   // rendu debug
   for(let i = 0 ; i < Object.keys(debugRendu).length ; i++){
     console.log(Object.keys(debugRendu)[i] , "\x1b[33m" + debugRendu[Object.keys(debugRendu)[i]] + "\x1b[0m")
   } 
-
+  
   console.log(playerPosition)
-  console.log("topleft : [" + playerPosition[0] + ", " + playerPosition[1] + "]")
-  console.log("topRight : [" + (playerPosition[0]) + ", " + (playerPosition[1]+7) + "]")
+  console.log(dataController.instance.players[0].velocity)
+ 
+
   // collision bottom left
   // const bottomLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
   // const bottomRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
@@ -155,7 +167,7 @@ function detectCollision(){
 
 
 
-  // return { topLeft, topRight, bottomLeft, bottomRight, floorLeft, floorRight }
+  return { topLeft, topRight, bottomUpLeft, bottomUpRight, bottomLeft, bottomRight, floorLeft, floorRight }
 }
 
 
