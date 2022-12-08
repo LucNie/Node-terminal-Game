@@ -5,6 +5,8 @@ const renderController = require('./renderController.js')
 require('dotenv').config()
 const readline = require('readline')
 
+let grounded = true
+
 
 // create the frame-rate controller
 function frameRateController () {
@@ -14,21 +16,17 @@ function frameRateController () {
   renderController.mainRender()
 
   let oldPosition = [dataController.instance.players[0].position[0], dataController.instance.players[0].position[1]]
+  let oldVelocity = [dataController.instance.players[0].velocity[0], dataController.instance.players[0].velocity[1]]
 
 
-
-
+ 
   if (dataController.instance.players[0].velocity[0] > 0) { // if the player velocity go up
     //moov
     dataController.instance.players[0].position[0] -= Math.round(dataController.instance.players[0].velocity[0] / 4)
-    //decrease velocity
-    dataController.instance.players[0].velocity[0] -= 1
 
   } else if (dataController.instance.players[0].velocity[0] < 0) { // if the player velocity go down
-
     dataController.instance.players[0].position[0] -= Math.round(dataController.instance.players[0].velocity[0] / 4)
-
-  } else if (dataController.instance.players[0].velocity[0] == 0) {
+  } else if (dataController.instance.players[0].velocity[0] === 0) {
     // do nothing
   }
 
@@ -45,15 +43,17 @@ function frameRateController () {
     //decrease velocity
     dataController.instance.players[0].velocity[1] += 1
 
-  } else if (dataController.instance.players[0].velocity[1] == 0) {
+  } else if (dataController.instance.players[0].velocity[1] === 0) {
     // do nothing
   }
 
 
   // simulate gravity
-  if (dataController.instance.players[0].position[0] < 60) {
+  if (dataController.instance.players[0].position[0] < 60 && grounded === false) {
     dataController.instance.players[0].velocity[0] -= 1
   }
+
+  grounded = false // reset grounded
 
   //gestion rotation player
   if (dataController.instance.players[0].velocity[1] > 0) {
@@ -62,9 +62,12 @@ function frameRateController () {
     dataController.instance.players[0].rotation = 1
   }
 
+  
+
+  // boundCollider();
+  collider(oldPosition,oldVelocity) //oldPosition x and y of the player before the moov
 
 
-  boundCollider();
 
   setTimeout(() => {
     frameRateController()
@@ -97,12 +100,47 @@ function boundCollider(){
   }
 }
 
-function collider(oldPosition){ //Plutar have 6x7px collider
-  //check if the player is in the collider with the instanced map
+function collider(aOldPosition,aOldVelocity){ //Plutar have 6x7px collider
   
-  
-  
+  //detect block collision 
+
+  const playerPosition = dataController.instance.players[0].position
+  // playerVelocity = dataController.instance.players[0].velocity //not used
+  const colision = detectCollision() //return bottomLeft, bottomRight, floorLeft, floorRight 
+
+      if (colision.bottomLeft === true || colision.bottomRight === true ) {
+        dataController.instance.players[0].position[0] -= 1
+        dataController.instance.players[0].velocity[0] = 0
+        grounded = true
+      } else if (colision.floorRight === true || colision.bottomRight === true) {
+        dataController.instance.players[0].velocity[0] = 0
+        grounded = true
+      }
+
+
+
 }
+
+function detectCollision(){
+  const playerPosition = dataController.instance.players[0].position
+  // collision bottom left
+  const bottomLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  const bottomRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  const floorLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  const floorRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  const topLeft = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-2 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+  const topRight = dataController.instanceMap[dataController.currentMap][Math.round(playerPosition[0]/4)-1][Math.round(playerPosition[1]/4)-1 ][playerPosition[0]%4][playerPosition[1]%4] !== 0
+
+  
+
+  console.log('bottomLeft : \x1b[32m'+bottomLeft+'\x1b[0m' + ' bottomRight : \x1b[32m'+bottomRight+'\x1b[0m' + ' floorLeft : \x1b[32m'+floorLeft+'\x1b[0m' + ' floorRight : \x1b[32m'+floorRight+'\x1b[0m' + ' topLeft : \x1b[32m'+topLeft+'\x1b[0m' + ' topRight : \x1b[32m'+topRight+'\x1b[0m' )
+
+
+
+  return {bottomLeft, bottomRight, floorLeft, floorRight}
+}
+
+
 
 function initController () {
   
