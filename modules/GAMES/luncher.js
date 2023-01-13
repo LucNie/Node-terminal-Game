@@ -7,5 +7,8 @@ module.exports = {
   },
   initSpaceGoat () {
     SPACE_GOAT.start()
+  },
+  initSpaceGoatMultiplayer () {
+    SPACE_GOAT.connect()
   }
 }

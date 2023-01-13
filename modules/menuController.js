@@ -123,8 +123,8 @@ function renderCurrentMenu () {
 
 function startGame () {
   menuSelect = [
-    '1. Space Goat (solo)',
-    '2. Space Goat (multi)',
+    '1. Space Goat (Host)',
+    '2. Space Goat (Connexion)',
     '3. Elit Goat (solo)',
     '4. Elit Goat (multi)',
     '5. back'

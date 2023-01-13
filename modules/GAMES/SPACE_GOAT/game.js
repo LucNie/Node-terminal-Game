@@ -19,3 +19,13 @@ function start() {
 
   return true
 }
+
+function connect() {
+  dataController.initData()
+  dataController.playerInit()
+  dataController.buildMap('0-0')
+  renderController.mainRender()
+  instanceController.initController()
+
+  return true
+}

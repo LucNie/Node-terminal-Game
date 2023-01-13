@@ -215,10 +215,3 @@ function initController () {
 module.exports = {
   initController
 }
-
-/**
- * 
-
-
-
- */
